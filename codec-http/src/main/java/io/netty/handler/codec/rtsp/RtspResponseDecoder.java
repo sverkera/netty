@@ -17,11 +17,7 @@ package io.netty.handler.codec.rtsp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.TooLongFrameException;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
  * Decodes {@link ByteBuf}s into RTSP responses represented in
@@ -49,46 +45,9 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  *     value, a {@link TooLongFrameException} will be raised.</td>
  * </tr>
  * </table>
+ *
+ * @deprecated Use RtspObjectDecoder directly instead
  */
+@Deprecated
 public class RtspResponseDecoder extends RtspObjectDecoder {
-
-    private static final HttpResponseStatus UNKNOWN_STATUS = new HttpResponseStatus(999, "Unknown");
-
-    /**
-     * Creates a new instance with the default
-     * {@code maxInitialLineLength (4096}}, {@code maxHeaderSize (8192)}, and
-     * {@code maxContentLength (8192)}.
-     */
-    public RtspResponseDecoder() {
-    }
-
-    /**
-     * Creates a new instance with the specified parameters.
-     */
-    public RtspResponseDecoder(int maxInitialLineLength, int maxHeaderSize,
-            int maxContentLength) {
-        super(maxInitialLineLength, maxHeaderSize, maxContentLength);
-    }
-
-    public RtspResponseDecoder(int maxInitialLineLength, int maxHeaderSize,
-                               int maxContentLength, boolean validateHeaders) {
-        super(maxInitialLineLength, maxHeaderSize, maxContentLength, validateHeaders);
-    }
-
-    @Override
-    protected HttpMessage createMessage(String[] initialLine) throws Exception {
-        return new DefaultHttpResponse(
-                RtspVersions.valueOf(initialLine[0]),
-                new HttpResponseStatus(Integer.parseInt(initialLine[1]), initialLine[2]), validateHeaders);
-    }
-
-    @Override
-    protected HttpMessage createInvalidMessage() {
-        return new DefaultFullHttpResponse(RtspVersions.RTSP_1_0, UNKNOWN_STATUS, validateHeaders);
-    }
-
-    @Override
-    protected boolean isDecodingRequest() {
-        return false;
-    }
 }

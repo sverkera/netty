@@ -17,8 +17,13 @@ package io.netty.handler.codec.rtsp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.TooLongFrameException;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.DefaultHttpRequest;
+import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpObjectDecoder;
+import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
  * Decodes {@link ByteBuf}s into RTSP messages represented in
@@ -48,27 +53,47 @@ import io.netty.handler.codec.http.HttpObjectDecoder;
  * </tr>
  * </table>
  */
-public abstract class RtspObjectDecoder extends HttpObjectDecoder {
+public class RtspObjectDecoder extends HttpObjectDecoder {
+    private static final HttpResponseStatus UNKNOWN_STATUS = new HttpResponseStatus(999, "Unknown");
+    private boolean isDecodingRequest;
+    private String versionRegex = "RTSP/\\d\\.\\d";
 
     /**
      * Creates a new instance with the default
      * {@code maxInitialLineLength (4096)}, {@code maxHeaderSize (8192)}, and
      * {@code maxContentLength (8192)}.
      */
-    protected RtspObjectDecoder() {
+    public RtspObjectDecoder() {
         this(4096, 8192, 8192);
     }
 
     /**
      * Creates a new instance with the specified parameters.
      */
-    protected RtspObjectDecoder(int maxInitialLineLength, int maxHeaderSize, int maxContentLength) {
+    public RtspObjectDecoder(int maxInitialLineLength, int maxHeaderSize, int maxContentLength) {
         super(maxInitialLineLength, maxHeaderSize, maxContentLength * 2, false);
     }
 
-    protected RtspObjectDecoder(
+    /**
+     * Creates a new instance with the specified parameters.
+     */
+    public RtspObjectDecoder(
             int maxInitialLineLength, int maxHeaderSize, int maxContentLength, boolean validateHeaders) {
         super(maxInitialLineLength, maxHeaderSize, maxContentLength * 2, false, validateHeaders);
+    }
+
+    @Override
+    protected HttpMessage createMessage(String[] initialLine) throws Exception {
+        // If the first element of the initial line is a version string then this is a response
+        if (initialLine[0].matches(versionRegex)) {
+            isDecodingRequest = false;
+            return new DefaultHttpResponse(RtspVersions.valueOf(initialLine[0]),
+                new HttpResponseStatus(Integer.parseInt(initialLine[1]), initialLine[2]), validateHeaders);
+        } else {
+            isDecodingRequest = true;
+            return new DefaultHttpRequest(RtspVersions.valueOf(initialLine[2]),
+                    RtspMethods.valueOf(initialLine[0]), initialLine[1], validateHeaders);
+        }
     }
 
     @Override
@@ -83,5 +108,20 @@ public abstract class RtspObjectDecoder extends HttpObjectDecoder {
             return true;
         }
         return empty;
+    }
+
+    @Override
+    protected HttpMessage createInvalidMessage() {
+        if (isDecodingRequest) {
+            return new DefaultFullHttpRequest(RtspVersions.RTSP_1_0,
+                       RtspMethods.OPTIONS, "/bad-request", validateHeaders);
+        } else {
+            return new DefaultFullHttpResponse(RtspVersions.RTSP_1_0, UNKNOWN_STATUS, validateHeaders);
+        }
+    }
+
+    @Override
+    protected boolean isDecodingRequest() {
+        return isDecodingRequest;
     }
 }

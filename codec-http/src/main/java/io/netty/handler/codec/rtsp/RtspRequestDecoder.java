@@ -17,9 +17,6 @@ package io.netty.handler.codec.rtsp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.TooLongFrameException;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
-import io.netty.handler.codec.http.DefaultHttpRequest;
-import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpRequest;
 
 /**
@@ -48,42 +45,9 @@ import io.netty.handler.codec.http.HttpRequest;
  *     value, a {@link TooLongFrameException} will be raised.</td>
  * </tr>
  * </table>
+ *
+ * @deprecated Use RtspObjectDecoder directly instead
  */
+@Deprecated
 public class RtspRequestDecoder extends RtspObjectDecoder {
-
-    /**
-     * Creates a new instance with the default
-     * {@code maxInitialLineLength (4096}}, {@code maxHeaderSize (8192)}, and
-     * {@code maxContentLength (8192)}.
-     */
-    public RtspRequestDecoder() {
-    }
-
-    /**
-     * Creates a new instance with the specified parameters.
-     */
-    public RtspRequestDecoder(int maxInitialLineLength, int maxHeaderSize, int maxContentLength) {
-        super(maxInitialLineLength, maxHeaderSize, maxContentLength);
-    }
-
-    public RtspRequestDecoder(
-            int maxInitialLineLength, int maxHeaderSize, int maxContentLength, boolean validateHeaders) {
-        super(maxInitialLineLength, maxHeaderSize, maxContentLength, validateHeaders);
-    }
-
-    @Override
-    protected HttpMessage createMessage(String[] initialLine) throws Exception {
-        return new DefaultHttpRequest(RtspVersions.valueOf(initialLine[2]),
-                RtspMethods.valueOf(initialLine[0]), initialLine[1], validateHeaders);
-    }
-
-    @Override
-    protected HttpMessage createInvalidMessage() {
-        return new DefaultFullHttpRequest(RtspVersions.RTSP_1_0, RtspMethods.OPTIONS, "/bad-request", validateHeaders);
-    }
-
-    @Override
-    protected boolean isDecodingRequest() {
-        return true;
-    }
 }

@@ -15,27 +15,55 @@
  */
 package io.netty.handler.codec.rtsp;
 
+import static io.netty.handler.codec.http.HttpConstants.CR;
+import static io.netty.handler.codec.http.HttpConstants.LF;
+import static io.netty.handler.codec.http.HttpConstants.SP;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.FullHttpMessage;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpObjectEncoder;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
+import io.netty.util.CharsetUtil;
 
 /**
  * Encodes an RTSP message represented in {@link FullHttpMessage} into
  * a {@link ByteBuf}.
  */
 @Sharable
-public abstract class RtspObjectEncoder<H extends HttpMessage> extends HttpObjectEncoder<H> {
-
-    /**
-     * Creates a new instance.
-     */
-    protected RtspObjectEncoder() {
-    }
+public class RtspObjectEncoder extends HttpObjectEncoder<HttpMessage> {
+    private static final byte[] CRLF = { CR, LF };
 
     @Override
     public boolean acceptOutboundMessage(Object msg) throws Exception {
-        return msg instanceof FullHttpMessage;
+        return (msg instanceof FullHttpRequest) || (msg instanceof FullHttpResponse);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    protected void encodeInitialLine(ByteBuf buf, HttpMessage message) throws Exception {
+        if (message instanceof HttpRequest) {
+            HttpRequest request = (HttpRequest) message;
+            HttpHeaders.encodeAscii(request.method().toString(), buf);
+            buf.writeByte(SP);
+            buf.writeBytes(request.uri().getBytes(CharsetUtil.UTF_8));
+            buf.writeByte(SP);
+            HttpHeaders.encodeAscii(request.protocolVersion().toString(), buf);
+            buf.writeBytes(CRLF);
+        } else if (message instanceof HttpResponse) {
+            HttpResponse response = (HttpResponse) message;
+            HttpHeaders.encodeAscii(response.protocolVersion().toString(), buf);
+            buf.writeByte(SP);
+            buf.writeBytes(String.valueOf(response.status().code()).getBytes(CharsetUtil.US_ASCII));
+            buf.writeByte(SP);
+            HttpHeaders.encodeAscii(String.valueOf(response.status().reasonPhrase()), buf);
+            buf.writeBytes(CRLF);
+        } else {
+            throw new Exception("Unsupported type " + message.getClass().getName());
+        }
     }
 }
