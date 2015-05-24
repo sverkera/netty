@@ -46,8 +46,8 @@ import io.netty.handler.codec.http.HttpResponse;
  * </tr>
  * </table>
  *
- * @deprecated Use RtspObjectDecoder directly instead
+ * @deprecated Use RtspDecoder directly instead
  */
 @Deprecated
-public class RtspResponseDecoder extends RtspObjectDecoder {
+public class RtspResponseDecoder extends RtspDecoder {
 }

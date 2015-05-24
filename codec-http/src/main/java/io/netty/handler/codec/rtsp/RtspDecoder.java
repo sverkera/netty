@@ -53,7 +53,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
  * </tr>
  * </table>
  */
-public class RtspObjectDecoder extends HttpObjectDecoder {
+public class RtspDecoder extends HttpObjectDecoder {
     private static final HttpResponseStatus UNKNOWN_STATUS = new HttpResponseStatus(999, "Unknown");
     private boolean isDecodingRequest;
     private String versionRegex = "RTSP/\\d\\.\\d";
@@ -63,21 +63,21 @@ public class RtspObjectDecoder extends HttpObjectDecoder {
      * {@code maxInitialLineLength (4096)}, {@code maxHeaderSize (8192)}, and
      * {@code maxContentLength (8192)}.
      */
-    public RtspObjectDecoder() {
+    public RtspDecoder() {
         this(4096, 8192, 8192);
     }
 
     /**
      * Creates a new instance with the specified parameters.
      */
-    public RtspObjectDecoder(int maxInitialLineLength, int maxHeaderSize, int maxContentLength) {
+    public RtspDecoder(int maxInitialLineLength, int maxHeaderSize, int maxContentLength) {
         super(maxInitialLineLength, maxHeaderSize, maxContentLength * 2, false);
     }
 
     /**
      * Creates a new instance with the specified parameters.
      */
-    public RtspObjectDecoder(
+    public RtspDecoder(
             int maxInitialLineLength, int maxHeaderSize, int maxContentLength, boolean validateHeaders) {
         super(maxInitialLineLength, maxHeaderSize, maxContentLength * 2, false, validateHeaders);
     }

@@ -22,8 +22,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
  * Encodes an RTSP request represented in {@link FullHttpRequest} into
  * a {@link ByteBuf}.
  *
- * @deprecated Use RtspObjectEncoder directly instead
+ * @deprecated Use RtspEncoder directly instead
  */
 @Deprecated
-public class RtspRequestEncoder extends RtspObjectEncoder {
+public class RtspRequestEncoder extends RtspEncoder {
 }

@@ -21,8 +21,8 @@ import io.netty.handler.codec.http.FullHttpResponse;
 /**
  * Encodes an RTSP response represented in {@link FullHttpResponse} into
  * a {@link ByteBuf}.
- * @deprecated Use RtspObjectEncoder directly instead
+ * @deprecated Use RtspEncoder directly instead
  */
 @Deprecated
-public class RtspResponseEncoder extends RtspObjectEncoder {
+public class RtspResponseEncoder extends RtspEncoder {
 }

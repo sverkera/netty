@@ -48,7 +48,7 @@ public class RtspDecoderTest {
                         "\r\n").getBytes();
 
 
-        EmbeddedChannel ch = new EmbeddedChannel(new RtspResponseDecoder(), new HttpObjectAggregator(1048576));
+        EmbeddedChannel ch = new EmbeddedChannel(new RtspDecoder(), new HttpObjectAggregator(1048576));
         ch.writeInbound(Unpooled.wrappedBuffer(data1), Unpooled.wrappedBuffer(data2));
 
         HttpObject res1 = ch.readInbound();

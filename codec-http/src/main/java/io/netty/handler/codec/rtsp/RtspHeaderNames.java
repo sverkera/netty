@@ -41,7 +41,7 @@ public final class RtspHeaderNames {
     /**
      * {@code "allow"}
      */
-    public static final AsciiString ALLOW = new AsciiString("allow");
+    public static final AsciiString ALLOW = new AsciiString("Allow");
     /**
      * {@code "authorization"}
      */
@@ -49,11 +49,11 @@ public final class RtspHeaderNames {
     /**
      * {@code "bandwidth"}
      */
-    public static final AsciiString BANDWIDTH = new AsciiString("bandwidth");
+    public static final AsciiString BANDWIDTH = new AsciiString("Bandwidth");
     /**
      * {@code "blocksize"}
      */
-    public static final AsciiString BLOCKSIZE = new AsciiString("blocksize");
+    public static final AsciiString BLOCKSIZE = new AsciiString("Blocksize");
     /**
      * {@code "cache-control"}
      */
@@ -61,7 +61,7 @@ public final class RtspHeaderNames {
     /**
      * {@code "conference"}
      */
-    public static final AsciiString CONFERENCE = new AsciiString("conference");
+    public static final AsciiString CONFERENCE = new AsciiString("Conference");
     /**
      * {@code "connection"}
      */
@@ -93,7 +93,7 @@ public final class RtspHeaderNames {
     /**
      * {@code "cseq"}
      */
-    public static final AsciiString CSEQ = new AsciiString("cseq");
+    public static final AsciiString CSEQ = new AsciiString("CSeq");
     /**
      * {@code "cate"}
      */
@@ -121,7 +121,7 @@ public final class RtspHeaderNames {
     /**
      * {@code "keymgmt"}
      */
-    public static final AsciiString KEYMGMT = new AsciiString("keymgmt");
+    public static final AsciiString KEYMGMT = new AsciiString("KeyMgmt");
     /**
      * {@code "last-modified"}
      */
@@ -133,11 +133,11 @@ public final class RtspHeaderNames {
     /**
      * {@code "proxy-require"}
      */
-    public static final AsciiString PROXY_REQUIRE = new AsciiString("proxy-require");
+    public static final AsciiString PROXY_REQUIRE = new AsciiString("Proxy-Require");
     /**
      * {@code "public"}
      */
-    public static final AsciiString PUBLIC = new AsciiString("public");
+    public static final AsciiString PUBLIC = new AsciiString("Public");
     /**
      * {@code "range"}
      */
@@ -149,7 +149,7 @@ public final class RtspHeaderNames {
     /**
      * {@code "require"}
      */
-    public static final AsciiString REQUIRE = new AsciiString("require");
+    public static final AsciiString REQUIRE = new AsciiString("Require");
     /**
      * {@code "retry-after"}
      */
@@ -157,15 +157,15 @@ public final class RtspHeaderNames {
     /**
      * {@code "rtp-info"}
      */
-    public static final AsciiString RTP_INFO = new AsciiString("rtp-info");
+    public static final AsciiString RTP_INFO = new AsciiString("RTP-Info");
     /**
      * {@code "scale"}
      */
-    public static final AsciiString SCALE = new AsciiString("scale");
+    public static final AsciiString SCALE = new AsciiString("Scale");
     /**
      * {@code "session"}
      */
-    public static final AsciiString SESSION = new AsciiString("session");
+    public static final AsciiString SESSION = new AsciiString("Session");
     /**
      * {@code "server"}
      */
@@ -173,19 +173,19 @@ public final class RtspHeaderNames {
     /**
      * {@code "speed"}
      */
-    public static final AsciiString SPEED = new AsciiString("speed");
+    public static final AsciiString SPEED = new AsciiString("Speed");
     /**
      * {@code "timestamp"}
      */
-    public static final AsciiString TIMESTAMP = new AsciiString("timestamp");
+    public static final AsciiString TIMESTAMP = new AsciiString("Timestamp");
     /**
      * {@code "transport"}
      */
-    public static final AsciiString TRANSPORT = new AsciiString("transport");
+    public static final AsciiString TRANSPORT = new AsciiString("Transport");
     /**
      * {@code "unsupported"}
      */
-    public static final AsciiString UNSUPPORTED = new AsciiString("unsupported");
+    public static final AsciiString UNSUPPORTED = new AsciiString("Unsupported");
     /**
      * {@code "user-agent"}
      */

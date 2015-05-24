@@ -21,8 +21,6 @@ import static io.netty.handler.codec.http.HttpConstants.SP;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.FullHttpMessage;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpObjectEncoder;
@@ -35,12 +33,12 @@ import io.netty.util.CharsetUtil;
  * a {@link ByteBuf}.
  */
 @Sharable
-public class RtspObjectEncoder extends HttpObjectEncoder<HttpMessage> {
+public class RtspEncoder extends HttpObjectEncoder<HttpMessage> {
     private static final byte[] CRLF = { CR, LF };
 
     @Override
     public boolean acceptOutboundMessage(Object msg) throws Exception {
-        return (msg instanceof FullHttpRequest) || (msg instanceof FullHttpResponse);
+        return super.acceptOutboundMessage(msg) && ((msg instanceof HttpRequest) || (msg instanceof HttpResponse));
     }
 
     @Override
