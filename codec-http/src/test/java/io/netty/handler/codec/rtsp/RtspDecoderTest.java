@@ -26,7 +26,7 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 
 import org.junit.Test;
 
-public class RtspResponseDecoderTest {
+public class RtspDecoderTest {
 
     /**
      * There was a problem when an ANNOUNCE request was issued by the server, i.e. entered through the response decoder.
