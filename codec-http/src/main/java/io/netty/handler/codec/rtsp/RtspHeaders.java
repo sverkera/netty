@@ -24,6 +24,7 @@ import io.netty.handler.codec.http.HttpHeaders;
  * Standard RTSP header names and values.
  */
 @Deprecated
+@SuppressWarnings("deprecation")
 public final class RtspHeaders {
 
     /**
@@ -36,7 +37,7 @@ public final class RtspHeaders {
         /**
          * {@code "Accept"}
          */
-        public static final String ACCEPT = HttpHeaders.Names.ACCEPT;
+		public static final String ACCEPT = HttpHeaders.Names.ACCEPT;
         /**
          * {@code "Accept-Encoding"}
          */
