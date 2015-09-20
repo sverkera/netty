@@ -38,9 +38,9 @@ public class RtspEncoderTest {
     @Test
     public void testSendSetupRequest() {
         String expected = "SETUP rtsp://172.10.20.30:554/d3abaaa7-65f2-42b4-8d6b-379f492fcf0f RTSP/1.0\r\n" +
-                          "Transport: MP2T/DVBC/UDP;unicast;client=01234567;source=172.10.20.30;" +
+                          "transport: MP2T/DVBC/UDP;unicast;client=01234567;source=172.10.20.30;" +
                           "destination=1.1.1.1;client_port=6922\r\n" +
-                          "CSeq: 1\r\n" +
+                          "cseq: 1\r\n" +
                           "\r\n";
 
         HttpRequest request = new DefaultHttpRequest(RtspVersions.RTSP_1_0, RtspMethods.SETUP,
@@ -64,10 +64,10 @@ public class RtspEncoderTest {
     @Test
     public void testSendGetParameterRequest() {
         String expected = "GET_PARAMETER rtsp://172.10.20.30:554 RTSP/1.0\r\n" +
-                          "Session: 2547019973447939919\r\n" +
-                          "CSeq: 3\r\n" +
-                          "Content-Length: 31\r\n" +
-                          "Content-Type: text/parameters\r\n" +
+                          "session: 2547019973447939919\r\n" +
+                          "cseq: 3\r\n" +
+                          "content-length: 31\r\n" +
+                          "content-type: text/parameters\r\n" +
                           "\r\n" +
                           "stream_state\r\n" +
                           "position\r\n" +
@@ -99,9 +99,9 @@ public class RtspEncoderTest {
     @Test
     public void testSend200OkResponseWithoutBody() {
         String expected = "RTSP/1.0 200 OK\r\n" +
-                           "Server: Testserver\r\n" +
-                           "CSeq: 1\r\n" +
-                           "Session: 2547019973447939919\r\n" +
+                           "server: Testserver\r\n" +
+                           "cseq: 1\r\n" +
+                           "session: 2547019973447939919\r\n" +
                            "\r\n";
 
         HttpResponse response = new DefaultHttpResponse(RtspVersions.RTSP_1_0, RtspResponseStatuses.OK);
@@ -123,11 +123,11 @@ public class RtspEncoderTest {
     @Test
     public void testSend200OkResponseWithBody() {
         String expected = "RTSP/1.0 200 OK\r\n" +
-                            "Server: Testserver\r\n" +
-                            "Session: 2547019973447939919\r\n" +
-                            "Content-Type: text/parameters\r\n" +
-                            "Content-Length: 50\r\n" +
-                            "CSeq: 3\r\n" +
+                            "server: Testserver\r\n" +
+                            "session: 2547019973447939919\r\n" +
+                            "content-type: text/parameters\r\n" +
+                            "content-length: 50\r\n" +
+                            "cseq: 3\r\n" +
                             "\r\n" +
                             "position: 24\r\n" +
                             "stream_state: playing\r\n" +
