@@ -45,10 +45,10 @@ public class RtspEncoderTest {
 
         HttpRequest request = new DefaultHttpRequest(RtspVersions.RTSP_1_0, RtspMethods.SETUP,
                 "rtsp://172.10.20.30:554/d3abaaa7-65f2-42b4-8d6b-379f492fcf0f");
-        request.headers().add("Transport",
+        request.headers().add(RtspHeaderNames.TRANSPORT,
                 "MP2T/DVBC/UDP;unicast;client=01234567;source=172.10.20.30;" +
                 "destination=1.1.1.1;client_port=6922");
-        request.headers().add("CSeq", "1");
+        request.headers().add(RtspHeaderNames.CSEQ, "1");
 
         EmbeddedChannel ch = new EmbeddedChannel(new RtspEncoder());
         ch.writeOutbound(request);
@@ -79,10 +79,10 @@ public class RtspEncoderTest {
 
         FullHttpRequest request = new DefaultFullHttpRequest(RtspVersions.RTSP_1_0, RtspMethods.GET_PARAMETER,
                 "rtsp://172.10.20.30:554");
-        request.headers().add("Session", "2547019973447939919");
-        request.headers().add("CSeq", "3");
-        request.headers().add("Content-Length", "" + content.length);
-        request.headers().add("Content-Type", "text/parameters");
+        request.headers().add(RtspHeaderNames.SESSION, "2547019973447939919");
+        request.headers().add(RtspHeaderNames.CSEQ, "3");
+        request.headers().add(RtspHeaderNames.CONTENT_LENGTH, "" + content.length);
+        request.headers().add(RtspHeaderNames.CONTENT_TYPE, "text/parameters");
         request.content().writeBytes(content);
 
         EmbeddedChannel ch = new EmbeddedChannel(new RtspEncoder());
@@ -105,9 +105,9 @@ public class RtspEncoderTest {
                            "\r\n";
 
         HttpResponse response = new DefaultHttpResponse(RtspVersions.RTSP_1_0, RtspResponseStatuses.OK);
-        response.headers().add("Server", "Testserver");
-        response.headers().add("CSeq", "1");
-        response.headers().add("Session", "2547019973447939919");
+        response.headers().add(RtspHeaderNames.SERVER, "Testserver");
+        response.headers().add(RtspHeaderNames.CSEQ, "1");
+        response.headers().add(RtspHeaderNames.SESSION, "2547019973447939919");
 
         EmbeddedChannel ch = new EmbeddedChannel(new RtspEncoder());
         ch.writeOutbound(response);
@@ -138,11 +138,11 @@ public class RtspEncoderTest {
                           "scale: 1.00\r\n").getBytes(CharsetUtil.UTF_8);
 
         FullHttpResponse response = new DefaultFullHttpResponse(RtspVersions.RTSP_1_0, RtspResponseStatuses.OK);
-        response.headers().add("Server", "Testserver");
-        response.headers().add("Session", "2547019973447939919");
-        response.headers().add("Content-Type", "text/parameters");
-        response.headers().add("Content-Length", "" + content.length);
-        response.headers().add("CSeq", "3");
+        response.headers().add(RtspHeaderNames.SERVER, "Testserver");
+        response.headers().add(RtspHeaderNames.SESSION, "2547019973447939919");
+        response.headers().add(RtspHeaderNames.CONTENT_TYPE, "text/parameters");
+        response.headers().add(RtspHeaderNames.CONTENT_LENGTH, "" + content.length);
+        response.headers().add(RtspHeaderNames.CSEQ, "3");
         response.content().writeBytes(content);
 
         EmbeddedChannel ch = new EmbeddedChannel(new RtspEncoder());
