@@ -42,7 +42,6 @@ public class RtspEncoder extends HttpObjectEncoder<HttpMessage> {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void encodeInitialLine(ByteBuf buf, HttpMessage message) throws Exception {
         if (message instanceof HttpRequest) {
             HttpRequest request = (HttpRequest) message;
